@@ -1,0 +1,24 @@
+{
+  "name": "fly-redis-node-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "FLY_REDIS_CACHE_URL=redis://localhost/ node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PierBover/fly-redis-node-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PierBover/fly-redis-node-test/issues"
+  },
+  "homepage": "https://github.com/PierBover/fly-redis-node-test#readme",
+  "dependencies": {
+    "fastify": "^3.2.0",
+    "redis": "^3.0.2"
+  }
+}
