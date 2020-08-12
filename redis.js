@@ -28,7 +28,6 @@ const redisClient = redis.createClient(options, {
 
 redisClient.on("connect", function(error) {
 	console.log('REDIS connected');
-	test();
 });
 
 redisClient.on("ready", function(error) {
@@ -49,16 +48,17 @@ redisClient.on("end", function() {
 	console.log('REDIS END');
 });
 
-async function test () {
+async function testLatency () {
 	addItem('TEST','SOMETHING');
 
-	for (var i = 0; i < 50; i++) {
-		try {
-			await getItem('TEST');
-		} catch (error) {
-			console.log(error);
-		}
+	const latencies = [];
+
+	for (var i = 0; i < 10; i++) {
+		const latency = await getItem('TEST');
+		latencies.push(latency);
 	}
+
+	return latencies;
 }
 
 function addItem (key, value) {
@@ -74,11 +74,13 @@ function getItem (key) {
 
 			if (error) reject(error);
 
-			console.log('REDIS LATENCY', Date.now() - start);
-
-			if (value) resolve(value);
-			else resolve(null);
+			const latency = Date.now() - start;
+			resolve(latency);
 		});
 
 	});
 }
+
+module.exports = {
+	testLatency
+};

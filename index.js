@@ -1,4 +1,4 @@
-require('./redis.js');
+const {testLatency} = require('./redis.js');
 
 const fastify = require('fastify')({
 	ignoreTrailingSlash: true,
@@ -14,8 +14,11 @@ fastify.setErrorHandler(function (error, request, reply) {
 fastify.route({
 	path: '/',
 	method: 'GET',
-	handler (request, reply) {
-		reply.send('Hello there!');
+	async handler (request, reply) {
+		const latencies = await testLatency();
+		let string = 'Redis latency test: \n';
+		string += latencies.map((latency) => latency + 'ms').join('\n');
+		reply.send(string);
 	}
 });
 
