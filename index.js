@@ -17,6 +17,7 @@ fastify.route({
 	async handler (request, reply) {
 		const latencies = await testLatency();
 		let string = 'Redis latency test: \n';
+		string += `Region: ${process.env.FLY_REGION}\n`
 		string += latencies.map((latency) => latency + 'ms').join('\n');
 		reply.send(string);
 	}
